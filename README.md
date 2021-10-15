@@ -1,1 +1,2 @@
-# ToxicCommentsBot
+# Toxic Comment Bot
+Это будущий бот для Telegram, который будет удалять токсичные комментарии в чатах.
