@@ -2,7 +2,7 @@ import telebot
 import pickle
 from tokenizer import custom_tokenizer
 
-TOKEN = "2058390751:AAHhvKBSTKvYHISU7upPkdLfEg5sJcftu38"
+TOKEN = "secret_token"
 bot = telebot.TeleBot(TOKEN)
 
 
