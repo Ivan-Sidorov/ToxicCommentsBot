@@ -1,12 +1,9 @@
 import telebot
 import pickle
 import random
-from flask import Flask, request
-import logging
-import os
 from tokenizer import custom_tokenizer
 
-TOKEN = "2058390751:AAHhvKBSTKvYHISU7upPkdLfEg5sJcftu38"
+TOKEN = "secret token"
 bot = telebot.TeleBot(TOKEN)
 
 greeting_sticker_id = 'CAACAgIAAxkBAAEDwjFh8ardnzpydiZgMq5T_Hv5YI9WVQACVwEAAhAabSKlKzxU-3o0qiME'
@@ -48,27 +45,5 @@ def echo_message(msg):
         bot.send_message(msg.chat.id, random.choice(answers))
 
 
-if "HEROKU" in list(os.environ.keys()):
-    logger = telebot.logger
-    telebot.logger.setLevel(logging.INFO)
-
-    app = Flask(__name__)
-
-
-    @app.route("/bot", methods=['POST'])
-    def get_message():
-        bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-        return 200
-
-
-    @app.route("/")
-    def webhook():
-        bot.remove_webhook()
-        bot.set_webhook(url="https://toxiccommentsbot.herokuapp.com/")
-        return 200
-    app.run()
-else:
-    # если переменной окружения HEROKU нету, значит это запуск с машины разработчика.
-    # Удаляем вебхук на всякий случай, и запускаем с обычным поллингом.
-    bot.remove_webhook()
-    bot.polling(none_stop=True)
+bot.delete_webhook()
+bot.polling(none_stop=True)
